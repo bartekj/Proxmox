@@ -79,7 +79,7 @@ function default_settings() {
         clear
         header_info
         echo -e "${BL}Using Default Settings${CL}"
-        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}Privileged${CL}"
         CT_TYPE="0"
         echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
         PW=" "
