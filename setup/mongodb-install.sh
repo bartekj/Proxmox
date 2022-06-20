@@ -78,8 +78,6 @@ sed -i 's/bindIp: 127\.0\.0\.1/bindIp: 0\.0\.0\.0/g' /etc/mongod.conf
 msg_ok "Installed MongoDB"
 msg_ok "Prevent unintended mongoDB upgrades"
 echo "mongodb-org hold" | sudo dpkg --set-selections &>/dev/null
-mkdir /var/log/mongodb
-chown -R mongodb:mongodb /var/log/mongodb/
 
 msg_info "Enable and start mondo at boot"
 sudo systemctl start mongod &>/dev/null
