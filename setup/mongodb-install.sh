@@ -63,6 +63,8 @@ msg_info "Installing Dependencies"
 apt-get install -y wget &>/dev/null
 apt-get install -y sudo &>/dev/null
 apt-get install -y gnupg2 &>/dev/null
+apt-get install -y apt-transport-https &>/dev/null
+apt-get install -y software-properties-common &>/dev/null
 
 msg_ok "Installed Dependencies"
 
@@ -70,14 +72,10 @@ msg_info "Installing MongoDB 4.4"
 wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - &>/dev/null
 echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list &>/dev/null
 apt-get update >/dev/null
-apt-get install -y mongodb-org mongodb-org-database mongodb-org-server mongodb-org-shell mongodb-org-mongos mongodb-org-tools &>/dev/null
+apt-get install -y mongodb-org &>/dev/null
 msg_ok "Installed MongoDB"
 msg_ok "Prevent unintended mongoDB upgrades"
 echo "mongodb-org hold" | sudo dpkg --set-selections &>/dev/null
-echo "mongodb-org-server hold" | sudo dpkg --set-selections &>/dev/null
-echo "mongodb-org-shell hold" | sudo dpkg --set-selections &>/dev/null
-echo "mongodb-org-mongos hold" | sudo dpkg --set-selections &>/dev/null
-echo "mongodb-org-tools hold" | sudo dpkg --set-selections &>/dev/null
 
 msg_info "Enable and start mondo at boot"
 sudo systemctl start mongod &>/dev/null
