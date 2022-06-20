@@ -73,9 +73,13 @@ wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add 
 echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list &>/dev/null
 apt-get update >/dev/null
 apt-get install -y mongodb-org &>/dev/null
+sed -i 's/bindIp: 127\.0\.0\.1/bindIp: 0\.0\.0\.0/g' /etc/mongod.conf
+
 msg_ok "Installed MongoDB"
 msg_ok "Prevent unintended mongoDB upgrades"
 echo "mongodb-org hold" | sudo dpkg --set-selections &>/dev/null
+mkdir /var/log/mongodb
+chown -R mongodb:mongodb /var/log/mongodb/
 
 msg_info "Enable and start mondo at boot"
 sudo systemctl start mongod &>/dev/null

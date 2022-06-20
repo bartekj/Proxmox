@@ -107,9 +107,9 @@ function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Unprivileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
+        echo -e "${YW}Type Unprivileged, or Press [ENTER] for Default: Privileged ${YW}"
         read CT_TYPE1
-        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1";
+        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Privileged" CT_TYPE="0";
         echo -en "${DGN}Set CT Type ${BL}$CT_TYPE1${CL}"
         else
         CT_TYPE1="Privileged"
@@ -166,9 +166,9 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 4 "
+        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 10 "
         read DISK_SIZE
-        if [ -z $DISK_SIZE ]; then DISK_SIZE="4"; fi;
+        if [ -z $DISK_SIZE ]; then DISK_SIZE="10"; fi;
         if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
         echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}${DGN}GB${CL}"
 echo -e " ${CM}${CL} \r"
@@ -181,9 +181,9 @@ header_info
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
-        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 1 "
+        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
         read CORE_COUNT
-        if [ -z $CORE_COUNT ]; then CORE_COUNT="1"; fi;
+        if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
         echo -en "${DGN}Set Cores To ${BL}$CORE_COUNT${CL}${DGN}vCPU${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
