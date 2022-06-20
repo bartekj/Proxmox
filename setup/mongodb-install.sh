@@ -69,7 +69,6 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing MongoDB"
 wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add - &>/dev/null
-#curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash &>/dev/null
 echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/5.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list &>/dev/null
 apt-get update >/dev/null
 apt-get install -y mongodb-org mongodb-org-database mongodb-org-server mongodb-org-shell mongodb-org-mongos mongodb-org-tools &>/dev/null
@@ -101,6 +100,4 @@ msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
-mkdir /var/log/apache2
-chmod 750 /var/log/apache2
 msg_ok "Cleaned"

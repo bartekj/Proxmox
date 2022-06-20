@@ -80,7 +80,7 @@ function default_settings() {
         header_info
         echo -e "${BL}Using Default Settings${CL}"
         echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-        CT_TYPE="1"
+        CT_TYPE="0"
         echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
         PW=" "
         echo -e "${DGN}Using CT ID ${BGN}$NEXTID${CL}"
@@ -88,9 +88,9 @@ function default_settings() {
         echo -e "${DGN}Using CT Name ${BGN}$NSAPP${CL}"
         HN=$NSAPP
         echo -e "${DGN}Using Disk Size ${BGN}4${CL}${DGN}GB${CL}"
-        DISK_SIZE="4"
+        DISK_SIZE="10"
         echo -e "${DGN}Using ${BGN}1${CL}${DGN}vCPU${CL}"
-        CORE_COUNT="1"
+        CORE_COUNT="2"
         echo -e "${DGN}Using ${BGN}1024${CL}${DGN}MiB RAM${CL}"
         RAM_SIZE="1024"
         echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
@@ -349,5 +349,3 @@ lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
 msg_ok "Completed Successfully!\n"
-echo -e "Adminer should be reachable by going to the following URL.
-         ${BL}http://${IP}/adminer/${CL} \n"
