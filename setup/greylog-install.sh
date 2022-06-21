@@ -74,7 +74,8 @@ wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add
 echo "deb https://artifacts.elastic.co/packages/oss-7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
 apt-get update &>/dev/null
 apt-get install -y elasticsearch-oss &>/dev/null
-
+mkdir /var/log/elasticsearch &>/dev/null
+chown -R elasticsearch:elasticsearch /var/log/elasticsearch &>/dev/null
 sudo systemctl daemon-reload &>/dev/null
 sudo systemctl start elasticsearch &>/dev/null
 sudo systemctl enable elasticsearch &>/dev/null
@@ -87,15 +88,18 @@ sudo dpkg -i graylog-4.2-repository_latest.deb &>/dev/null
 apt-get update &>/dev/null
 apt install -y graylog-server &>/dev/null
 GREYLOG_PASS=$(pwgen -N 1 -s 96)
-sed -i 's/password_secret = /password_secret =  ${GREYLOG_PASS}/g' /etc/graylog/server/server.conf &>/dev/null
-echo "rest_listen_uri = http://127.0.0.1:9000/api/" >> /etc/graylog/server/server.conf &>/dev/null
-echo "web_listen_uri = http://127.0.0.1:9000/" >> /etc/graylog/server/server.conf &>/dev/null
+sed -i "s/password_secret = /password_secret =  ${GREYLOG_PASS}/g" /etc/graylog/server/server.conf &>/dev/null
+#echo "rest_listen_uri = http://127.0.0.1:9000/api/" >> /etc/graylog/server/server.conf &>/dev/null
+#echo "web_listen_uri = http://127.0.0.1:9000/" >> /etc/graylog/server/server.conf &>/dev/null
 GREYLOG_ROOT_PASS=$(echo -n Str0ngPassw0rd | sha256sum)
-sed -i 's/root_password_sha2 = /root_password_sha2 =  ${GREYLOG_ROOT_PASS}/g' /etc/graylog/server/server.conf &>/dev/null
+sed -i "s/root_password_sha2 = /root_password_sha2 =  ${GREYLOG_ROOT_PASS}/g" /etc/graylog/server/server.conf &>/dev/null
+mkdir /var/log/graylog-server/ &>/dev/null
+chown -R graylog:graylog /var/log/graylog-server/ &>/dev/null
 sudo systemctl daemon-reload &>/dev/null
 sudo systemctl restart graylog-server &>/dev/null
 sudo systemctl enable graylog-server &>/dev/null
 echo "http_bind_address = 0.0.0.0:9000" >> /etc/graylog/server/server.conf &>/dev/null
+sed -i "s/#http_bind_address = 127.0.0.1:9000/http_bind_address = 0.0.0.0:9000/g" /etc/graylog/server/server.conf &>/dev/null
 msg_ok "Installed Greylog server"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
